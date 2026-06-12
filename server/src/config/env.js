@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { z } from 'zod';
 
-dotenv.config();
+dotenv.config({ override: false });
 
 const isTestEnv = process.env.NODE_ENV === 'test';
 
@@ -14,6 +14,8 @@ const envSchema = z.object({
   MONGODB_URI: isTestEnv
     ? z.string().optional()
     : z.string().min(1, 'MONGODB_URI is required'),
+  // Hashing cost for bcrypt (optional, defaults to 12)
+  BCRYPT_COST: z.coerce.number().int().positive().optional().default(12),
   // Will become required when the auth layer lands.
   JWT_SECRET: z.string().min(32).optional(),
   FRONTEND_ORIGIN: z.string().url().default('http://localhost:5173'),

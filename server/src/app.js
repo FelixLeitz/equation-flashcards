@@ -11,6 +11,7 @@ import { notFoundHandler, errorHandler } from './middleware/error-handler.js';
 import healthRoutes from './routes/health.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import deckRoutes from './routes/decks.routes.js';
+import cardRoutes from './routes/cards.routes.js';
 
 export function createApp() {
   const app = express();
@@ -45,6 +46,7 @@ export function createApp() {
   app.use('/api/health', healthRoutes);
   app.use('/api/auth', authRoutes);
   app.use('/api/decks', deckRoutes);
+  app.use('/api/cards', cardRoutes);
 
   // 404 + error handling (must be last).
   app.use(notFoundHandler);

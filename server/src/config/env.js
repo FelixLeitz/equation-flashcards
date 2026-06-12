@@ -16,8 +16,12 @@ const envSchema = z.object({
     : z.string().min(1, 'MONGODB_URI is required'),
   // Hashing cost for bcrypt (optional, defaults to 12)
   BCRYPT_COST: z.coerce.number().int().positive().optional().default(12),
-  // Will become required when the auth layer lands.
-  JWT_SECRET: z.string().min(32).optional(),
+  // Required outside tests; tests use a fixed test secret.
+  JWT_SECRET: isTestEnv
+    ? z.string().min(32).default('test-secret-at-least-32-characters-long!!')
+    : z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
+  // Token lifetime (REQ-ACC-010: <= 7 days).
+  JWT_EXPIRES_IN: z.string().default('7d'),
   FRONTEND_ORIGIN: z.string().url().default('http://localhost:5173'),
   SENTRY_DSN: z.string().optional()
 });

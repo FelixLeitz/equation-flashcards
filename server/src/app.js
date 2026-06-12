@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import { isTest } from './config/env.js';
 import { logger } from './config/logger.js';
 import { applySecurity } from './middleware/security.js';
+import passport from './config/passport.js';
 import { globalLimiter } from './middleware/rate-limit.js';
 import { notFoundHandler, errorHandler } from './middleware/error-handler.js';
 import healthRoutes from './routes/health.routes.js';
@@ -22,6 +23,9 @@ export function createApp() {
   // Body and cookie parsing.
   app.use(express.json({ limit: '1mb' }));
   app.use(cookieParser());
+
+  // Passport (stateless — no sessions).
+  app.use(passport.initialize());
 
   // HTTP request logging (skip noise during tests).
   if (!isTest) {

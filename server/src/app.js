@@ -5,8 +5,10 @@ import morgan from 'morgan';
 import { isTest } from './config/env.js';
 import { logger } from './config/logger.js';
 import { applySecurity } from './middleware/security.js';
+import { globalLimiter } from './middleware/rate-limit.js';
 import { notFoundHandler, errorHandler } from './middleware/error-handler.js';
 import healthRoutes from './routes/health.routes.js';
+import authRoutes from './routes/auth.routes.js';
 
 export function createApp() {
   const app = express();
@@ -30,8 +32,13 @@ export function createApp() {
     );
   }
 
+  // Permissive global rate limit on the API (skip during tests).
+  // More strict limits are applied on specific endpoints like auth.
+  app.use('/api', globalLimiter);
+
   // Routes.
   app.use('/api/health', healthRoutes);
+  app.use('/api/auth', authRoutes);
 
   // 404 + error handling (must be last).
   app.use(notFoundHandler);

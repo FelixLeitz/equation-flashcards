@@ -15,8 +15,19 @@
     "build": "npm run build -w client",
     "test": "npm test -w server && npm test -w client",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,html}": [
+      "prettier --write"
+    ]
   },
   "repository": {
     "type": "git",
@@ -31,8 +42,14 @@
   },
   "homepage": "https://github.com/FelixLeitz/equation-flashcards#readme",
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "concurrently": "^10.0.3",
-    "eslint": "^10.4.1",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
     "prettier": "^3.8.4"

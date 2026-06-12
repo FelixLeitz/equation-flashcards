@@ -9,4 +9,9 @@ export const createDeckSchema = z.object({
   description: z.string().max(MAX_DECK_DESCRIPTION_LENGTH).optional()
 });
 
-export const updateDeckSchema = createDeckSchema.partial();
+// PATCH: all fields optional, but at least one must be present.
+export const updateDeckSchema = createDeckSchema
+  .partial()
+  .refine((data) => Object.keys(data).length > 0, {
+    message: 'At least one field (title or description) must be provided.'
+  });

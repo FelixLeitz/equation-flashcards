@@ -1,12 +1,22 @@
-import express from 'express';
+import { createApp } from './app.js';
+import { env } from './config/env.js';
+import { logger } from './config/logger.js';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const app = createApp();
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' });
+const server = app.listen(env.PORT, () => {
+  logger.info(`Server listening on http://localhost:${env.PORT}`);
+  logger.info(`Environment: ${env.NODE_ENV}`);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
-});
+// Graceful shutdown.
+function shutdown(signal) {
+  logger.info(`${signal} received — shutting down gracefully.`);
+  server.close(() => {
+    logger.info('HTTP server closed.');
+    process.exit(0);
+  });
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));

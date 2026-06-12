@@ -3,12 +3,18 @@ import { z } from 'zod';
 
 dotenv.config();
 
+const isTestEnv = process.env.NODE_ENV === 'test';
+
 const envSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'test', 'production'])
     .default('development'),
   PORT: z.coerce.number().int().positive().default(3000),
-  MONGODB_URI: z.string().optional(),
+  // Required outside tests; tests supply an in-memory URI at runtime.
+  MONGODB_URI: isTestEnv
+    ? z.string().optional()
+    : z.string().min(1, 'MONGODB_URI is required'),
+  // Will become required when the auth layer lands.
   JWT_SECRET: z.string().min(32).optional(),
   FRONTEND_ORIGIN: z.string().url().default('http://localhost:5173'),
   SENTRY_DSN: z.string().optional()

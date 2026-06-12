@@ -1,0 +1,40 @@
+{
+  "name": "equation-flashcards",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=24.14.0"
+  },
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently -n SERVER,CLIENT -c blue,green \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "test": "npm test -w server && npm test -w client",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FelixLeitz/equation-flashcards.git"
+  },
+  "keywords": [],
+  "author": "Felix Leitz",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/FelixLeitz/equation-flashcards/issues"
+  },
+  "homepage": "https://github.com/FelixLeitz/equation-flashcards#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "eslint": "^10.4.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
+    "prettier": "^3.8.4"
+  }
+}

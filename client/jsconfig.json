@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"],
+      "@shared/*": ["../../shared/src/*"]
+    },
+    "checkJs": false,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "target": "esnext"
+  },
+  "include": ["src/**/*"]
+}

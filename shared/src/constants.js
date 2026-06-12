@@ -1,0 +1,7 @@
+export const MAX_DECKS_PER_USER = 500;
+export const MAX_CARDS_PER_DECK = 1000;
+export const MAX_CARD_FACE_LENGTH = 4000;
+export const MAX_DECK_TITLE_LENGTH = 120;
+export const MAX_DECK_DESCRIPTION_LENGTH = 1000;
+export const MAX_DISPLAY_NAME_LENGTH = 60;
+export const MIN_PASSWORD_LENGTH = 8;

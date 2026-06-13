@@ -12,6 +12,7 @@ import healthRoutes from './routes/health.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import deckRoutes from './routes/decks.routes.js';
 import cardRoutes from './routes/cards.routes.js';
+import accountRoutes from './routes/account.routes.js';
 
 export function createApp() {
   const app = express();
@@ -47,6 +48,7 @@ export function createApp() {
   app.use('/api/auth', authRoutes);
   app.use('/api/decks', deckRoutes);
   app.use('/api/cards', cardRoutes);
+  app.use('/api/account', accountRoutes);
 
   // 404 + error handling (must be last).
   app.use(notFoundHandler);

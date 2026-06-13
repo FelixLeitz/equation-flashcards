@@ -66,7 +66,7 @@ describe('cards.service', () => {
     expect(c2.order).to.equal(2);
   });
 
-  it('persists malformed LaTeX as-is (REQ-CARD-007)', async () => {
+  it('persists malformed LaTeX as-is', async () => {
     const card = await addCardToDeck(deckId, userId, {
       front: '$\\frac{1}{$',
       back: ''

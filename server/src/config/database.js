@@ -26,6 +26,10 @@ export async function connectDatabase(uri = env.MONGODB_URI) {
     serverSelectionTimeoutMS: 10000
   });
 
+  if (env.NODE_ENV === 'test') {
+    mongoose.connection.setMaxListeners(20);
+  }
+
   return connection;
 }
 

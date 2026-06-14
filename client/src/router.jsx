@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { RequireAuth, RedirectIfAuth } from '@/features/auth/guards.jsx';
+import { AppShell } from '@/components/AppShell.jsx';
 import LandingPage from '@/pages/LandingPage.jsx';
 import NotFoundPage from '@/pages/NotFoundPage.jsx';
 import LoginPage from '@/features/auth/LoginPage.jsx';
@@ -20,12 +21,18 @@ export const router = createBrowserRouter([
     ]
   },
 
-  // Protected app routes.
+  // Protected app routes, wrapped in the authenticated shell.
   {
     element: <RequireAuth />,
     children: [
-      { path: '/decks', element: <DeckListPage /> },
-      { path: '/decks/:id', element: <DeckDetailPage /> },
+      {
+        element: <AppShell />,
+        children: [
+          { path: '/decks', element: <DeckListPage /> },
+          { path: '/decks/:id', element: <DeckDetailPage /> }
+        ]
+      },
+      // Study mode is full-screen (no shell chrome).
       { path: '/decks/:id/study', element: <StudyMode /> }
     ]
   },

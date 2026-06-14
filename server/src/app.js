@@ -3,12 +3,13 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import * as Sentry from '@sentry/node';
 
-import { env, isTest } from './config/env.js';
+import { env, isTest, isProduction } from './config/env.js';
 import { logger } from './config/logger.js';
 import { applySecurity } from './middleware/security.js';
 import passport from './config/passport.js';
 import { globalLimiter } from './middleware/rate-limit.js';
 import { notFoundHandler, errorHandler } from './middleware/error-handler.js';
+import { serveClient } from './middleware/serve-client.js';
 import healthRoutes from './routes/health.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import deckRoutes from './routes/decks.routes.js';
@@ -51,8 +52,13 @@ export function createApp() {
   app.use('/api/cards', cardRoutes);
   app.use('/api/account', accountRoutes);
 
-  // 404 + error handling (must be last).
-  app.use(notFoundHandler);
+  // API 404: only matches /api/* so the SPA fallback can handle the rest.
+  app.use('/api', notFoundHandler);
+
+  // --- Static client (production only) ---
+  if (isProduction) {
+    serveClient(app);
+  }
 
   // Sentry captures errors before our handler formats the response.
   // Only active when a DSN is configured (initSentry ran in server.js).

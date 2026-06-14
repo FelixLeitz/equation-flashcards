@@ -1,8 +1,9 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+import * as Sentry from '@sentry/node';
 
-import { isTest } from './config/env.js';
+import { env, isTest } from './config/env.js';
 import { logger } from './config/logger.js';
 import { applySecurity } from './middleware/security.js';
 import passport from './config/passport.js';
@@ -52,6 +53,13 @@ export function createApp() {
 
   // 404 + error handling (must be last).
   app.use(notFoundHandler);
+
+  // Sentry captures errors before our handler formats the response.
+  // Only active when a DSN is configured (initSentry ran in server.js).
+  if (env.SENTRY_DSN) {
+    Sentry.setupExpressErrorHandler(app);
+  }
+
   app.use(errorHandler);
 
   return app;

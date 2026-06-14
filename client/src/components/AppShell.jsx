@@ -1,5 +1,5 @@
-import { Link, Outlet } from 'react-router-dom';
-import { GraduationCap, LogOut } from 'lucide-react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { GraduationCap, LogOut, User } from 'lucide-react';
 import { useAuth } from '@/features/auth/AuthContext.jsx';
 import { useLogout } from '@/features/auth/api.js';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 export function AppShell() {
   const { user } = useAuth();
   const logout = useLogout();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -20,6 +21,14 @@ export function AppShell() {
             <span className="hidden text-sm text-muted-foreground sm:inline">
               {user?.displayName}
             </span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/account')}
+            >
+              <User className="mr-2 h-4 w-4" />
+              Account
+            </Button>
             <Button
               variant="ghost"
               size="sm"

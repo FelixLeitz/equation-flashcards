@@ -5,6 +5,7 @@ import LandingPage from '@/pages/LandingPage.jsx';
 import NotFoundPage from '@/pages/NotFoundPage.jsx';
 import LoginPage from '@/features/auth/LoginPage.jsx';
 import SignUpPage from '@/features/auth/SignUpPage.jsx';
+import AccountPage from './features/account/AccountPage.jsx';
 import DeckListPage from '@/features/decks/DeckListPage.jsx';
 import DeckDetailPage from '@/features/decks/DeckDetailPage.jsx';
 import StudyMode from '@/features/study/StudyMode.jsx';
@@ -29,7 +30,8 @@ export const router = createBrowserRouter([
         element: <AppShell />,
         children: [
           { path: '/decks', element: <DeckListPage /> },
-          { path: '/decks/:id', element: <DeckDetailPage /> }
+          { path: '/decks/:id', element: <DeckDetailPage /> },
+          { path: '/account', element: <AccountPage /> }
         ]
       },
       // Study mode is full-screen (no shell chrome).

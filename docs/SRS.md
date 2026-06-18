@@ -2,9 +2,9 @@
 
 ## For Equation-Flashcards
 
-Version 0.1  
+Version 1.0
 Prepared by Felix Leitz
-11 July 2026
+18 July 2026
 
 ## Table of Contents
 
@@ -39,6 +39,7 @@ Prepared by Felix Leitz
 | Name        | Date         | Reason For Changes | Version |
 | ----------- | ------------ | ------------------ | ------- |
 | Felix Leitz | 11 June 2026 | Inital Draft       | 0.1     |
+| Felix Leitz | 18 June 2026 | MVP Release        | 1.0     |
 |             |              |                    |         |
 
 ---
@@ -780,7 +781,7 @@ flowchart LR
     end
 
     Sentry[(Sentry<br/>Error Tracking)]
-    Host[Hosting Provider<br/>Railway / Render / Fly.io]
+    Host[Hosting Provider<br/>Railway]
 
     User <-->|HTTPS| FE
     BE -.->|Error reports| Sentry
@@ -1049,7 +1050,7 @@ flowchart TD
     Study -->|session complete| Decks
 ```
 
-A representative low-fidelity wireframe of the **Study Mode** screen on mobile (most space-constrained view) is sketched below using a textual block layout. Higher-fidelity wireframes, if produced, are stored under `docs/wireframes/` in the repository.
+A representative low-fidelity wireframe of the **Study Mode** screen on mobile (most space-constrained view) is sketched below using a textual block layout.
 
 ```
 +-----------------------------------+
